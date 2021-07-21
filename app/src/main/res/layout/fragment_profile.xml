@@ -41,12 +41,7 @@
                 android:id="@+id/username_profile_frag"
                 android:textStyle="bold"/>
 
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Log out"
-                android:id="@+id/logout_btn"
-                android:layout_alignParentRight="true"/>
+
 
         </RelativeLayout>
 
@@ -61,7 +56,12 @@
 
     </androidx.cardview.widget.CardView>
 
-
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Log out"
+        android:id="@+id/logout_btn"
+        android:layout_alignParentBottom="true"/>
 
 
 </RelativeLayout>
