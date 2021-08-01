@@ -14,7 +14,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="150dp"
         android:fontFamily="@font/marck_script"
-        android:text="Simle"
+        android:text="Shaco"
         android:textColor="@color/my_color"
         android:textSize="56sp"
         android:textStyle="bold" />
