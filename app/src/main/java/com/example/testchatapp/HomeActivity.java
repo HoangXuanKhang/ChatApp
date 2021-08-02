@@ -5,6 +5,7 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager.widget.ViewPager;
+import androidx.viewpager2.widget.ViewPager2;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -23,6 +24,7 @@ import com.example.testchatapp.fragment.ProfileFragment;
 import com.example.testchatapp.fragment.UsersFragment;
 import com.example.testchatapp.model.User;
 import com.google.android.material.tabs.TabLayout;
+import com.google.android.material.tabs.TabLayoutMediator;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -40,7 +42,7 @@ public class HomeActivity extends AppCompatActivity {
     private DatabaseReference reference;
     private TabLayout tabLayout;
     private MyViewPagerAdapter myViewPagerAdapter;
-    private ViewPager viewPager;
+    private ViewPager2 viewPager2;
     private String myId;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,14 +76,26 @@ public class HomeActivity extends AppCompatActivity {
 
 
         tabLayout = findViewById(R.id.tab_layout);
-        viewPager = findViewById(R.id.viewPager);
+        viewPager2 = findViewById(R.id.viewPager);
 
-        myViewPagerAdapter = new MyViewPagerAdapter(getSupportFragmentManager(), FragmentPagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
-        myViewPagerAdapter.addFragment(new ChatsFragment(),"Chat");
-        myViewPagerAdapter.addFragment(new UsersFragment(),"Users");
-        myViewPagerAdapter.addFragment(new ProfileFragment(),"Profile");
-        viewPager.setAdapter(myViewPagerAdapter);
-        tabLayout.setupWithViewPager(viewPager);
+        myViewPagerAdapter = new MyViewPagerAdapter(this);
+        viewPager2.setAdapter(myViewPagerAdapter);
+        new TabLayoutMediator(tabLayout, viewPager2, new TabLayoutMediator.TabConfigurationStrategy() {
+            @Override
+            public void onConfigureTab(@NonNull TabLayout.Tab tab, int position) {
+                switch (position){
+                    case 0:
+                        tab.setText("Chat");
+                        break;
+                    case 1:
+                        tab.setText("Users");
+                        break;
+                    case 2:
+                        tab.setText("Profile");
+                        break;
+                }
+            }
+        }).attach();
 
         currentUser = FirebaseAuth.getInstance().getCurrentUser();
         myId = currentUser.getUid();

@@ -3,40 +3,37 @@ package com.example.testchatapp.fragment;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
+import androidx.viewpager2.adapter.FragmentStateAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class MyViewPagerAdapter extends FragmentPagerAdapter {
-    private List<Fragment> fragments;
-    private List<String> titles;
-    public MyViewPagerAdapter(@NonNull FragmentManager fm, int behavior) {
-        super(fm, behavior);
-        fragments = new ArrayList<>();
-        titles = new ArrayList<>();
+public class MyViewPagerAdapter extends FragmentStateAdapter {
+
+    public MyViewPagerAdapter(@NonNull FragmentActivity fragmentActivity) {
+        super(fragmentActivity);
     }
 
+    @NonNull
+    @Override
+    public Fragment createFragment(int position) {
+        switch (position){
+            case 0:
+                return new ChatsFragment();
+            case 1:
+                return new UsersFragment();
+            case 2:
+                return new ProfileFragment();
+            default:
+                return null;
+        }
+    }
 
     @Override
-    public Fragment getItem(int position) {
-        return fragments.get(position);
-    }
-
-    @Override
-    public int getCount() {
-        return fragments.size();
-    }
-
-
-    @Override
-    public CharSequence getPageTitle(int position) {
-        return titles.get(position);
-    }
-
-    public void addFragment(Fragment fragment,String title){
-        fragments.add(fragment);
-        titles.add(title);
+    public int getItemCount() {
+        return 3;
     }
 }
